@@ -17,13 +17,12 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-
+    let mut buffer = [0; 2048];
     stream.read(&mut buffer).unwrap();
 
-    let request = String::from_utf8_lossy(&buffer[..]);
+    let request = String::from_utf8_lossy(&buffer[..]).trim_matches(char::from(0)).to_string();
     if request.eq("shutdown") {
-        println!("shutdown Request!: {}", String::from_utf8_lossy(&buffer[..]));
+        println!("shutdown Request!: {}", request);
         match force_shutdown() {
             Ok(_) => println!("Bye!"),
             Err(error) => eprintln!("Failed to shut down: {}", error)

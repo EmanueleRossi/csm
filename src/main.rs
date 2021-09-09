@@ -25,13 +25,13 @@ fn handle_connection(mut stream: TcpStream) {
         println!("shutdown Request!: {}", request);
         match force_shutdown() {
             Ok(_) => println!("Bye!"),
-            Err(error) => eprintln!("Failed to shut down: {}", error)
+            Err(error) => eprintln!("Failed to shutdown: {}", error)
         }
     } else if request.eq("reboot") {
-        println!("reboot Request!: {}", String::from_utf8_lossy(&buffer[..]));
+        println!("reboot Request!: {}", request);
         match force_reboot() {
             Ok(_) => println!("Bye!"),
-            Err(error) => eprintln!("Failed to shut down for rebooting: {}", error)
+            Err(error) => eprintln!("Failed to reboot: {}", error)
         }
     } else {
         println!("Request: {:#?}", request);
